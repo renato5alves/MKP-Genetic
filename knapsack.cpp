@@ -24,8 +24,8 @@ void Knapsack::build() // este metodo realiza o processo de inicialização das 
     int **constraints = (int**) malloc(this->_n * sizeof(int*));
     for (int i = 0; i < this->_n; i++)
     {
-        //constraints[i] = (int*) malloc(this->_m * sizeof(int));
-        constraints[i] = new int[this->_m];
+        constraints[i] = (int*) malloc(this->_m * sizeof(int));
+        //constraints[i] = (int*) new int[this->_m];
     }
     /*==================== seção 2 ====================*/
     
@@ -47,7 +47,9 @@ void Knapsack::build() // este metodo realiza o processo de inicialização das 
             //media = soma/this->_m;
             //printf("%f\n",soma/this->_m);
         }
-        Item *newItem = new Item(i, (int)values[i], soma/this->_m, constraints[i]);
+        
+        int *aux = constraints[i];
+        Item *newItem = new Item(i, (int)values[i], soma/this->_m, aux);
         this->_itens.push_back(newItem);
         //printf("\n");
         
@@ -56,15 +58,16 @@ void Knapsack::build() // este metodo realiza o processo de inicialização das 
     /*==================== seção 3 ====================*/
     // verifica se o armazenamento está sento feito corretamente
 
-    
-            //for(int i = 0 ; this->_n ; i++){
-                //printf("%d\nvalor: %d\n",i, this->_itens[i]->get_value());
-                //printf("media: %.4f\n", this->_itens[i]->get_media());
-                //constr = this->_itens[i]->get_Constraints();
-                //for (int i = 0; i < this->_m; i++)
-                //    printf("%d ", constr[i]);
-                //printf("\n\n");
-            //}
+            // int *constr;
+            // for(int i = 0 ; this->_n ; i++)
+            // {
+            //     printf("%d\nvalor: %d\n",i, this->_itens[i]->get_value());
+            //     printf("media: %.4f\n", this->_itens[i]->get_media());
+            //     constr = this->_itens[i]->get_Constraints();
+            //     for (int i = 0; i < this->_m; i++)
+            //        printf("%d ", constr[i]);
+            //     printf("\n");
+            // }
     // verifica se o armazenamento está sento feito corretamente
 
     /*==================== seção 4 ====================*/
@@ -83,9 +86,9 @@ void Knapsack::build() // este metodo realiza o processo de inicialização das 
     //esta seção libera a memória de estruturas de dados temporários utilizados para leitura e criação da lista
     fclose(f);
 
-    for(int i = 0 ; i < this->_n ; i++)
-        free((int*)constraints[i]);
-    free(constraints);
+    // for(int i = 0 ; i < this->_n ; i++)
+    //     free((int*)constraints[i]);
+    //free(constraints);
     free(values);
     // for(unsigned i = 0 ; i < this->_m ; i ++)
     //     delete[] constraints[i];
@@ -94,4 +97,5 @@ void Knapsack::build() // este metodo realiza o processo de inicialização das 
     // delete[] values;
     // delete[] medias;
     /*==================== seção 5 ====================*/
+    printf("saiu\n");
 }

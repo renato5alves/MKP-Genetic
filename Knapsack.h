@@ -14,18 +14,23 @@ private:
     int _w;     // best solution finded
     int *_constraints; // knapsack constraints
 public:
-    char *filename;
+    char *filename; // arquivo de entrada
     Knapsack
     (char *filename)
     {
         this->filename = filename;
     };
-    //inline:
-    Item* get_item(int id)
+    inline Item* get_item(int id)
     {
         return this->_itens[id];
     };
+    inline int get_constraints(int id)
+    {
+        return this->_constraints[id];
+    };
+    inline int get_n(){ return this->_n;};
+    inline int get_m(){ return this->_m;};
     void build();
-    int get_n();
+    //int get_n();
 
 };
