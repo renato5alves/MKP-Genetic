@@ -4,8 +4,8 @@
 #include <iostream>
 #include <time.h>
 //#include "Knapsack.h"
-#include "Individual.h"
-
+//#include "Individual.h"
+#include "population.h"
 using namespace std;
 
 int main(int argc, char const *argv[])
@@ -17,25 +17,10 @@ int main(int argc, char const *argv[])
         printf("started knapsack algorithm\n");
         Knapsack *knapsack = new Knapsack((char*)argv[1]);
         knapsack->build();
-
-        // for (int i = 0; i < knapsack->get_n(); i++)
-        // {
-        //     int *c;
-        //     Item* it = knapsack->get_item(i);
-        //     c = it->get_Constraints();
-        //     for (int j = 0; j < knapsack->get_m(); j++)
-        //     {
-        //         printf("%d ", c[j]);
-        //     }
-        //     printf("\n");
-            
-        // }
         
+        Population *population = new Population(atoi(argv[2]));
+        printf("population size: [%d]", population->get_pSize());
 
-        Individual *i;
-
-        i = new Individual(knapsack);
-        
         printf("\nfinalizou\n");
         //printf("%d\n", teste->get_value());
         //delete(knapsack);

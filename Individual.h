@@ -5,7 +5,7 @@ private:
     int *_genes;
     int  _fit;
     int *_constraints;
-    int isFeasible;
+    bool isFeasible;
 public:
     Individual
     (Knapsack *k)
@@ -43,23 +43,27 @@ public:
                 for(int j=0 ;j<m;j++)
                 {
                     this->_constraints[j]+= c[j];
-                    printf("[%d]", this->_constraints[j]);
+                    //printf("--[%d]", this->_constraints[j]);
                 }
-                printf("\n");
+                //printf("\n");
             }
         }
         for ( int i = 0; i < m; i++)
         {
             if(k->get_constraints(i) < this->_constraints[i])
             {
-                this->isFeasible = 1;
+                this->isFeasible = false;
             }else{
-                this->isFeasible = 0;
+                this->isFeasible = true;
             }
         }
         
 
     };
+    int* get_genes(){return this->_genes;};
+    inline int  get_fit(){return this->_fit;};
+    inline int* get_constraints(){return this->_constraints;};
+    inline bool get_isFeasible(){return this->isFeasible;};
     ~Individual();
 };
 
