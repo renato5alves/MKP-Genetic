@@ -20,10 +20,13 @@ public:
 
         }
         
+        
+        
     };
     inline
     int get_pSize(){ return this->_pSize; };
     Individual* search_Individual(int id){
+        
         return this->_Population[id];
     };
     ~Population();

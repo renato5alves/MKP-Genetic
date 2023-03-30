@@ -1,7 +1,32 @@
 {
-    // Use o IntelliSense para saber mais sobre os atributos possíveis.
-    // Focalizar para exibir as descrições dos atributos existentes.
-    // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": []
+    "configurations": [
+    {
+        "name": "(gdb) Iniciar",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "C:/Users/Renato/Desktop/TCC/MKP-Genetic/MKP-Genetic",
+        "args": ["hp1.dat", "500"],
+        "stopAtEntry": true,
+        "cwd": "C:/Users/Renato/Desktop/TCC/MKP-Genetic",
+        "environment": [{ "name": "config", "value": "Debug" }],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "miDebuggerPath": "gdb",
+        "setupCommands": [
+            {
+                "description": "Habilitar a reformatação automática para gdb",
+                "text": "-enable-pretty-printing",
+                "ignoreFailures": true
+            },
+            {
+                "description": "Definir Tipo de Desmontagem como Intel",
+                "text": "-gdb-set disassembly-flavor intel",
+                "ignoreFailures": true
+            }
+        ]
+    }
+    ]
+    
+    
+    
 }

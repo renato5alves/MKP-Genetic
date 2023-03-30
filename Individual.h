@@ -16,11 +16,7 @@ public:
         this->_genes = new int[n];
         this->_constraints = (int*) calloc(m, sizeof(int));
         this->_fit = 0;
-        for (int i = 0; i < m; i++)
-        {
-            printf("%d ",this->_constraints[i]);
-        }
-        printf("\n");
+        
         for (int i = 0; i < n; i++)
         {
             int r = rand() % 100;
@@ -28,16 +24,17 @@ public:
                 this->_genes[i] = 0;
             else 
                 this->_genes[i] = 1;
-            printf("%d ", this->_genes[i]);
+            
         }
-        printf("\n");
+      
         for (int i = 0; i < n; i++)
         {
-            int *c;
+            int *c, f;
             Item *item = k->get_item(i);
             //printf("\n%d\n", item->get_value());
             //printf("%f\n", item->get_media());
             c = (int*) item->get_Constraints();
+            f = item->get_value();
             if(this->_genes[i] == 1)
             {
                 for(int j=0 ;j<m;j++)
@@ -46,6 +43,7 @@ public:
                     //printf("--[%d]", this->_constraints[j]);
                 }
                 //printf("\n");
+                this->_fit += f;
             }
         }
         for ( int i = 0; i < m; i++)
