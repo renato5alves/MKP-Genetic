@@ -46,22 +46,70 @@ public:
                 this->_fit += f;
             }
         }
-        for ( int i = 0; i < m; i++)
-        {
-            if(k->get_constraints(i) < this->_constraints[i])
-            {
-                this->isFeasible = false;
-            }else{
-                this->isFeasible = true;
-            }
-        }
-        
+        this->set_isFeasible(k);
+        //this->repair(k);
 
     };
-    int* get_genes(){return this->_genes;};
-    inline int  get_fit(){return this->_fit;};
-    inline int* get_constraints(){return this->_constraints;};
-    inline bool get_isFeasible(){return this->isFeasible;};
+    int* 
+    get_genes(){return this->_genes;};
+    inline 
+    int  get_fit(){return this->_fit;};
+    inline 
+    int* get_constraints(){return this->_constraints;};
+    inline 
+    void set_isFeasible(Knapsack *k){
+        this->isFeasible = true;
+        int *c;
+        c = k->get_constraints();
+        for ( int i = 0; i < k->get_m(); i++)
+        {
+            //printf("%d < %d\n", c[i], this->_constraints[i]);
+            if(c[i] < this->_constraints[i])
+            {
+                this->isFeasible = false;
+            }
+        }
+        //return this->isFeasible;
+    };
+    inline
+    bool get_isFeasible()
+    {
+       return this->isFeasible; 
+    };
+    inline
+    void repair(Knapsack *Knapsack)
+    {
+        this->_drop(Knapsack);
+    }
+    inline 
+    void _drop(Knapsack* Knapsack)
+    {
+        int maior;
+        while(!(this->get_isFeasible()))
+        {
+            maior = -1;
+            for (int i = 0; i < Knapsack->get_n(); i++)
+            {
+                if(this->_genes[i] == 1)
+                {
+                    Item *tmp = Knapsack->get_item(i);
+                    if(tmp->get_media() > maior)
+                        maior = i;
+
+                }
+                
+            }
+        
+        this->_genes[maior] = 0;
+        Item *tmp =  Knapsack->get_item(maior);
+        int  *removed = tmp->get_Constraints();
+        for (int i = 0; i < Knapsack->get_m(); i++)
+            this->_constraints[i] -= removed[i];
+        set_isFeasible(Knapsack);
+        }
+        
+    
+    }
     ~Individual();
 };
 

@@ -24,9 +24,9 @@ public:
     {
         return this->_itens[id];
     };
-    inline int get_constraints(int id)
+    inline int* get_constraints()
     {
-        return this->_constraints[id];
+        return this->_constraints;
     };
     inline int get_n(){ return this->_n;};
     inline int get_m(){ return this->_m;};

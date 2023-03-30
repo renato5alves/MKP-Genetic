@@ -15,13 +15,9 @@ public:
         for (int i = 0; i < this->_pSize; i++)
         {
             Individual *newIndividual = new Individual(Knapsack);
-
-            this->_Population.push_back(newIndividual);
-
-        }
-        
-        
-        
+            newIndividual->repair(Knapsack);
+            this->_Population.push_back(newIndividual);            
+        } 
     };
     inline
     int get_pSize(){ return this->_pSize; };
