@@ -16,7 +16,7 @@ public:
     inline int get_id(){return this->_id;};
     inline int get_value(){ return this->_value;};
     inline double get_media() { return this->_media;};
-    inline int* get_Constraints(){return this->_constraints;};
+    inline int* get_constraints(){return this->_constraints;};
   
 
     ~Item()

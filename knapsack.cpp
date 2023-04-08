@@ -97,5 +97,5 @@ void Knapsack::build() // este metodo realiza o processo de inicialização das 
     // delete[] values;
     // delete[] medias;
     /*==================== seção 5 ====================*/
-    printf("saiu\n");
+    //printf("saiu\n");
 }

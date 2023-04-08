@@ -30,6 +30,7 @@ public:
     };
     inline int get_n(){ return this->_n;};
     inline int get_m(){ return this->_m;};
+    inline int get_w(){ return this->_w;};
     void build();
     //int get_n();
 
