@@ -16,6 +16,7 @@ public:
         {
             Individual *newIndividual = new Individual(Knapsack);
             newIndividual->repair(Knapsack);
+            
             this->_Population.push_back(newIndividual);            
         } 
     };
@@ -26,5 +27,27 @@ public:
         return this->_Population[id];
     };
     
-    ~Population();
+    Population(int size, vector<Individual*> population)
+    {
+        this->_pSize = size;
+        this->_Population = population;
+    }
+
+
+  
+    inline Individual* get_best_individual()
+    {    
+        int best = 0;
+        for (int i = 1; i < this->_pSize; i++)
+        {
+            Individual *tmp = this->_Population[i];
+
+            if(tmp->get_fit() > this->_Population[best]->get_fit()) best = i;
+        }
+
+        return this->_Population[best];
+    }
+    ~Population(){
+        this->_Population.clear();
+    };
 };

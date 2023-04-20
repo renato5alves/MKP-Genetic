@@ -3,18 +3,21 @@
 class Genetic
 {
 private:
+    Population *_population;
+public:
 
-    Population *_poputation;
     Knapsack *_k;
 
-public:
-    Genetic(Knapsack *k, int pSize){
-        this->_k = k;
-        this->_poputation = new Population(pSize);
+
+    Genetic(char *EntryFlie, int pSize){
+        this->_k = new Knapsack(EntryFlie);
+        this->_k->build();
+        this->_population = new Population(pSize);
     };
     inline void start_new_population()
     {
-        this->_poputation->create_init_population(this->_k);
+        this->_population->create_init_population(this->_k);
+        printf("saiu\n");
         
     };
 
@@ -24,8 +27,8 @@ public:
         int b = -1; // second parent
         int *winners = new int[2];
         while( a == b){
-            a = rand() % this->_poputation->get_pSize();
-            b = rand() % this->_poputation->get_pSize();
+            a = rand() % this->_population->get_pSize();
+            b = rand() % this->_population->get_pSize();
         }
 
         int rnd = rand() % 100;
@@ -39,45 +42,53 @@ public:
         }   
     };
     
-    inline int crossover()
+    inline Individual* crossover(int p1, int p2)
     {
-        int rf = rand() % 100; /*randon factor*/
-        int p1 = -1, p2 = -1;
+       
+        Individual *Parent1 = this->_population->search_Individual(p1);
+        Individual *Parent2 = this->_population->search_Individual(p2); 
 
-
-        while(p1 == p2)
+        int *child = new int[this->_k->get_n()];
+        int sorteio;
+        for (int i = 0; i < this->_k->get_n(); i++)
         {
-            p1 = this->selection();
-            p2 = this->selection();
+            sorteio = rand() % 100;
+            if(sorteio / 2 == 0) child[i] = (Parent1->get_genes())[i];
+            else child[i] = (Parent2->get_genes())[i];
+            
         }
-        Individual *tmp;
-        for (int i = 0; i < this->_k->get_m(); i++)
-        {
-            printf("\t%d", (this->_k->get_constraints())[i]);
-        }
-        printf("\n");
-        for(int i = 0 ; i < this->_poputation->get_pSize(); i++)
-        {
-            tmp = this->_poputation->search_Individual(i);
-            int *g = tmp->get_genes();
-            int *c = tmp->get_constraints();
-            printf("%d ", tmp->get_fit());
-            
-            
-            for (int i = 0; i < this->_k->get_m(); i++)
-            {
-                printf("\t%d ", c[i]);   
-            }
-            
-            printf("\t%f ",tmp->get_gap(this->_k->get_w()));
-            
-            printf("\n");
+        
+        // for (int i = 0; i < this->_k->get_n(); i++)
+        // {
+        //     printf("%d",  child[i]);   
+        // }
+       
+                            
 
-        }
-
-        return 1;;
+       Individual *novo = new Individual(this->_k, child);
+        
+        // for (int i = 0; i < this->_k->get_n(); i++)
+        // {
+        //     printf("%d",  novo->get_genes()[i]);   
+        // }
+        // printf("\n");
+        return novo;
     }
-
+    inline void set_population(Population *new_population){
+        if(this->_population != NULL)
+        {
+            delete this->_population;  
+            this->_population = new_population;
+        }
+        else{
+            this->_population = new_population;
+        }
+    }
+   
+    inline Population* get_population()
+    {
+        return this->_population;
+    }
 
     ~Genetic();
 };

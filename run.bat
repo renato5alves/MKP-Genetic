@@ -1,0 +1,1 @@
+MKP-Genetic.exe hp1.dat 3000 200 > test.dat

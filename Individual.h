@@ -59,13 +59,7 @@ public:
     };
     Individual(Knapsack *k, int *genes)
     {
-        if(this->_genes != NULL)
-        {
-           for(int i = 0 ; k->get_n() ; i++)
-            this->_genes[i] = genes[i];
-        }else{
-            this->_genes = genes;
-        }
+        this->_genes = genes;
 
         int n = k->get_n();
         int m = k->get_m();
@@ -92,7 +86,7 @@ public:
         }
         this->set_isFeasible(k);
         //printf("before repair fit %d\n ", this->_fit);
-        this->repair(k);
+        //this->repair(k);
         // printf("after repair fot %d\n", this->_fit);
         double w = k->get_w();
         double a = this->_fit;
@@ -133,6 +127,7 @@ public:
     }
     inline
     void repair(Knapsack *Knapsack)
+        
     {
         this->_drop(Knapsack);
         this->_add(Knapsack);
@@ -141,26 +136,44 @@ public:
     void _drop(Knapsack* Knapsack)
     {
         int maior;
+        int maior_media;
         while(!(this->get_isFeasible()))
         {
-            maior = -1;
+            maior = 0;
+            
             for (int i = 0; i < Knapsack->get_n(); i++)
-            {
                 if(this->_genes[i] == 1)
+            {
                 {
                     Item *tmp = Knapsack->get_item(i);
-                    if(tmp->get_media() > maior)
+                    if(tmp->get_media() > maior_media)
+                    {    
                         maior = i;
+                        maior_media = tmp->get_media();
+                    }   
 
                 }
                 
             }
-        
+            // for (size_t i = 0; i < Knapsack->get_m(); i++)
+            // {
+            //     printf("{%d}", this->_constraints[i]);
+            // }
             this->_genes[maior] = 0;
             Item *tmp = Knapsack->get_item(maior);
             int  *removed = tmp->get_constraints();
+            // printf("\n============================\n");
             for (int i = 0; i < Knapsack->get_m(); i++)
+            {
                 this->_constraints[i] -= removed[i];
+                //printf("[%d]", removed[i]);
+            }
+            // printf("\n");
+            // for (size_t i = 0; i < Knapsack->get_m(); i++)
+            // {
+            //     printf("(%d)", this->_constraints[i]);
+            // }
+            // printf("\n============================\n");
             this->_fit -= tmp->get_value();
 
             // for (int i = 0; i < Knapsack->get_m(); i++)
@@ -175,14 +188,15 @@ public:
     inline
     void _add(Knapsack *k)
     {
-        int iterations = rand() % 5;
+        int iterations = k->get_n();
 
 
         for(int j = 0 ; j < iterations ; j++)
         {
-            int add = rand() % k->get_n();
+            int add = j;// rand() % k->get_n();
             int *kc = k->get_constraints();
             int *ic;
+            //printf("%d ", this->_fit);
             if(this->_genes[add] == 0)
             {
                 Item *tmp = k->get_item(add);
@@ -207,11 +221,28 @@ public:
                 //     printf("%d ", this->_constraints[i]);
                 // printf("\n");
             }else{
-                j--; // para garantir que seja contabilizada as tentativas de itens que ainda não estão na mochila
+                continue; // para garantir que seja contabilizada as tentativas de itens que ainda não estão na mochila
             }
 
         }
+        //printf("\n");
     }
+
+    inline void mutation(int n)
+    {
+        int k = abs(n*0.2);
+        int r;
+        //printf("k %d ", k);
+        // if(r % 2 == 0)    k = 3;
+        // else              k = 2;
+        r = rand() % n;
+        for (int i = 0; i < k; i++)
+        {  
+            if(this->_genes[n] == 0) this->_genes[n] = 1;
+            if(this->_genes[n] == 1) this->_genes[n] = 0;
+        }
+    }
+
     ~Individual();
 };
 
