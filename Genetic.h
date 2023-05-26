@@ -3,9 +3,8 @@
 class Genetic
 {
 private:
-    Population *_population;
 public:
-
+    Population *_population;
     Knapsack *_k;
 
 
@@ -42,37 +41,25 @@ public:
         }   
     };
     
-    inline Individual* crossover(int p1, int p2)
+    inline int* crossover(int p1, int p2)
     {
        
         Individual *Parent1 = this->_population->search_Individual(p1);
         Individual *Parent2 = this->_population->search_Individual(p2); 
-
+        int *gp1, *gp2;
         int *child = new int[this->_k->get_n()];
         int sorteio;
+        gp1 = Parent1->get_genes();
+        gp2 = Parent2->get_genes();
         for (int i = 0; i < this->_k->get_n(); i++)
         {
             sorteio = rand() % 100;
-            if(sorteio / 2 == 0) child[i] = (Parent1->get_genes())[i];
-            else child[i] = (Parent2->get_genes())[i];
+            if(sorteio % 2 == 0) child[i] = gp1[i];
+            else child[i] = gp2[i];
             
-        }
-        
-        // for (int i = 0; i < this->_k->get_n(); i++)
-        // {
-        //     printf("%d",  child[i]);   
-        // }
+        }   
        
-                            
-
-       Individual *novo = new Individual(this->_k, child);
-        
-        // for (int i = 0; i < this->_k->get_n(); i++)
-        // {
-        //     printf("%d",  novo->get_genes()[i]);   
-        // }
-        // printf("\n");
-        return novo;
+        return child;
     }
     inline void set_population(Population *new_population){
         if(this->_population != NULL)

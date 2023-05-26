@@ -1,1 +1,1 @@
-MKP-Genetic.exe hp1.dat 3000 200 > test.dat
+MKP-Genetic.exe OR5x500-0.50_2.dat 10 10000 > test.out

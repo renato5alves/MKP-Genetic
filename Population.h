@@ -3,8 +3,8 @@ using namespace std;
 class Population
 {
 private:
-    vector<Individual*> _Population;
     int _pSize;
+    vector<Individual*> _Population;
 public:
     Population(int size){
         this->_pSize = size;
@@ -32,20 +32,34 @@ public:
         this->_pSize = size;
         this->_Population = population;
     }
-
-
   
-    inline Individual* get_best_individual()
+    inline Individual* get_best_individual()/* Essa busca retorna O PIOR individuo da população*/
     {    
         int best = 0;
         for (int i = 1; i < this->_pSize; i++)
         {
             Individual *tmp = this->_Population[i];
-
             if(tmp->get_fit() > this->_Population[best]->get_fit()) best = i;
         }
+        Individual *ibest = this->_Population[best];
+        return ibest;
+    }
+    inline int get_worst_individual() /* Essa busca retorna O INDICE para o pior individuo da população*/
+    {    
+        int worst = 0;
+        for (int i = 1; i < this->_pSize; i++)
+        {
+            Individual *tmp = this->_Population[i];
+            if(tmp->get_fit() < this->_Population[worst]->get_fit())/*then*/ worst = i;
+        }
+        Individual *iworst = this->_Population[worst];
+        return worst;
+    }
+    inline void replace_worst(Individual* replace)
+    {
+        int i = this->get_worst_individual();
+        this->_Population[i]->replace(replace);
 
-        return this->_Population[best];
     }
     ~Population(){
         this->_Population.clear();
